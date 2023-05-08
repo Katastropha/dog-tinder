@@ -1,46 +1,44 @@
 // Create the Dog class here
 
 class Dog {
-    constructor(data, rootElement, onFinish) {
-        this.data = data
-        this.onFinish = onFinish
-        this.rootElement = rootElement
-    }
+  constructor(data, rootElement, onFinish) {
+    this.data = data;
+    this.onFinish = onFinish;
+    this.rootElement = rootElement;
+  }
 
-    _handleLike() {
-        const btnGreen = this.rootElement.querySelector('.btn_green')
-        const stampLike = this.rootElement.querySelector('.like')
-        
-        this.data.hasBeenLiked = true
-        
-        btnGreen.classList.add("active_green")
-        stampLike.style.display = "block"
-        
-        setTimeout(() => {
-            this.onFinish()
-        }, 1000) 
-                     
-    }
+  _handleLike() {
+    const btnGreen = this.rootElement.querySelector(".btn_green");
+    const stampLike = this.rootElement.querySelector(".like");
 
-    _handleDislike() { 
-        const btnRed = this.rootElement.querySelector('.btn_red')
-        const stampNope = this.rootElement.querySelector('.nope')
-        
-        this.data.hasBeenSwiped = true
-        
-        btnRed.classList.add("active_red")
-        stampNope.style.display = "block"
-        
-        setTimeout(() => {
-            this.onFinish()
-        }, 1000)
+    this.data.hasBeenLiked = true;
 
-    }
-    
-    _render() {
-        const {name, avatar, age, bio} = this.data
-          
-        const result = `
+    btnGreen.classList.add("active_green");
+    stampLike.style.display = "block";
+
+    setTimeout(() => {
+      this.onFinish();
+    }, 1000);
+  }
+
+  _handleDislike() {
+    const btnRed = this.rootElement.querySelector(".btn_red");
+    const stampNope = this.rootElement.querySelector(".nope");
+
+    this.data.hasBeenSwiped = true;
+
+    btnRed.classList.add("active_red");
+    stampNope.style.display = "block";
+
+    setTimeout(() => {
+      this.onFinish();
+    }, 1000);
+  }
+
+  _render() {
+    const { name, avatar, age, bio } = this.data;
+
+    const result = `
             <div class="dog">
                 <div class="color">
                     <img src="images/badge-like.png" class="like">
@@ -57,32 +55,29 @@ class Dog {
                     <div class="btn btn_green"><img class="btn_img dog_btn_like" src="images/icon-heart.png"></div>
                 </div>
             </div>
-        `        
-        // return result
-       this.rootElement.innerHTML = result
-    }
-       
-    feedHtml() {
-        const { name, avatar, age, bio, hasBeenSwiped, hasBeenLiked } = this.data
-        
-        this._render()
+        `;
+    this.rootElement.innerHTML = result;
+  }
 
-        const handleLikeCb = (e) => {
-            this.rootElement.removeEventListener('click', handleLikeCb)
-            const btnLike = e.target.closest('.btn_green');  
-            !btnLike || this._handleLike()
-        }
-        this.rootElement.addEventListener('click', handleLikeCb)
+  feedHtml() {
+    const { name, avatar, age, bio, hasBeenSwiped, hasBeenLiked } = this.data;
 
-        const handleDislikeCb = (e) => {
-            this.rootElement.removeEventListener('click', handleDislikeCb)
-            const btnDislike = e.target.closest('.btn_red');
-            !btnDislike || this._handleDislike()
-        }
-        this.rootElement.addEventListener('click', handleDislikeCb)
-        
-    }    
+    this._render();
+
+    const handleLikeCb = (e) => {
+      this.rootElement.removeEventListener("click", handleLikeCb);
+      const btnLike = e.target.closest(".btn_green");
+      !btnLike || this._handleLike();
+    };
+    this.rootElement.addEventListener("click", handleLikeCb);
+
+    const handleDislikeCb = (e) => {
+      this.rootElement.removeEventListener("click", handleDislikeCb);
+      const btnDislike = e.target.closest(".btn_red");
+      !btnDislike || this._handleDislike();
+    };
+    this.rootElement.addEventListener("click", handleDislikeCb);
+  }
 }
 
-export default Dog
-
+export default Dog;
